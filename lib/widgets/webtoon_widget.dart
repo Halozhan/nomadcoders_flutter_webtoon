@@ -11,20 +11,38 @@ class Webtoon extends StatelessWidget {
     required this.thumb,
   });
 
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => DetailScreen(
+        id: id,
+        title: title,
+        thumb: thumb,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        // 애니메이션을 위한 시작과 끝
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        // 여러 트윈을 연결
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+      fullscreenDialog: true,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) => DetailScreen(
-              id: id,
-              title: title,
-              thumb: thumb,
-            ),
-            fullscreenDialog: true,
-          ),
+          _createRoute(),
         );
       },
       child: Column(
