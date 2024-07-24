@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nomadcoders_flutter_webtoon/models/webtoon_detail_model.dart';
 import 'package:nomadcoders_flutter_webtoon/models/webtoon_episode_model.dart';
 import 'package:nomadcoders_flutter_webtoon/services/api_service.dart';
+import 'package:nomadcoders_flutter_webtoon/widgets/episode_widget.dart';
 
 class DetailScreen extends StatefulWidget {
   final String id, title, thumb;
@@ -109,39 +110,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 return Column(
                                   children: [
                                     for (var episode in snapshot.data!)
-                                      Container(
-                                        margin:
-                                            const EdgeInsets.only(bottom: 10),
-                                        decoration: BoxDecoration(
-                                          color: Colors.green[400],
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 10,
-                                            horizontal: 20,
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                episode.title,
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                              const Icon(
-                                                Icons.chevron_right_rounded,
-                                                color: Colors.white,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                      Episode(webtoonId: widget.id, episode: episode),
                                   ],
                                 );
                               }
